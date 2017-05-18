@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<input type="text" id="message" />
+<input type="button" id="add" value="send" />
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+<script>
+    var connection = $.hubConnection();
+    var contosoChatHubProxy = connection.createHubProxy('serviceHub');
+    contosoChatHubProxy.on('goPage', function (message) {
+        console.log(message);
+    });
+    connection.start()
+        .done(function () {
+     
+    
+        })
+        .fail(function () { console.log('Could not connect'); });
+    $('#add').click(function () {
+        contosoChatHubProxy.invoke('SendMessage', $('#message').val());
+        $('#message').val('').focus();
+    });
+</script>
+

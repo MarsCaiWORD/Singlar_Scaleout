@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Client";
+}
+
+<h2>Client</h2>
+
+
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+<script>
+    var contosoChatHubProxy = $.connection.contosoChatHub;
+  
+
+    var connection = $.hubConnection();
+    var contosoChatHubProxy = connection.createHubProxy('serviceHub');
+    contosoChatHubProxy.on('goPage', function (message) {
+        console.log(message);
+    });
+    connection.start()
+        .done(function () {
+
+        })
+        .fail(function () { console.log('Could not connect'); });
+</script>
